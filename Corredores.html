@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <style>
+    </style>
+    
+    <title>NYCM 2018</title>
+
+	<script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+    <script src="/rogLib/rogLib.js"></script>
+    <script>
+        function debut() {
+            // leeJson(".\corredores18",mstCorredores)
+            accede("GET","localhost:3000/corredores",mstCorredores)
+        }
+        function mstCorredores(datos) {
+            mstTabla
+            (datos,"lstCorredores","Corredores","correo,nombre,status",mstCorredor,"nombre")
+        }
+        function mstCorredor(datos) {
+            let formulario = objDom("frmCorredor");
+            let br = document.createElement("BR")
+            for(let x in datos) {
+                let nuevo = document.createElement("LABEL");
+                nuevo.htmlFor = x;
+                nuevo.textContent = x;
+                nuevo.title = "";
+                
+                formulario.appendChild(nuevo);
+                
+                nuevo = document.createElement("INPUT");
+                nuevo.name = x;
+                nuevo.value = datos[x];
+                
+                formulario.appendChild(nuevo);
+                formulario.appendChild(br);
+            }
+        };
+    </script>
+</head>
+
+<body onload="debut()">
+  <h1>Corredores para el NYCM 2018</h1>
+    
+    <div>
+        <h2>Lista de corredores</h2>
+        <div style="display: flex">
+            <div id="lstCorredores"></div>
+            <div id="planilla">
+                <form id="frmCorredor">
+                </form>
+            </div>
+        </div>
+        <div>
+            <span id="btnAgrega" class="rogBtn" title="Agrega otro corredor">+</span>
+            <span id="btnGuarda" class="" title="Guarda los Datos"></span>
+        </div>
+    </div>
+  <footer>Elaborado por <a href="https://rafagomez.neocities.org">Rafa Gómez</a></footer>
+</body>
+</html>
