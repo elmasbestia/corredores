@@ -15,16 +15,15 @@ const corredores = require("./corredores18.json");
 
 function guarda() { } // Guarda los datos en el archivo
 
-function bsqQue(query) {
-    console.log("Bsq:",query)
-    //for (let x in query) { return x }
-    return;
-}
-	
-function bsq(que,valor) {
-	console.log(que," = ", valor);
-	if(que === "Nombre") return corredores.filter(x => x[que].indexOf(valor) > -1);
-	return corredores.filter(x => x[que] === valor);
+function bsq(query) {
+    console.log(query)
+    let { que, valor } = query;
+    console.log("Lee corredores con que:", que);
+    if (que) {
+	    console.log(que," = ", valor);
+	    if(que === "Nombre") return corredores.filter(x => x[que].indexOf(valor) > -1);
+	    return corredores.filter(x => x[que] === valor);
+    } else return corredores;
 }
 
 function strCompara(que,descendente){
@@ -80,10 +79,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/corredores', (req, res) => {
-    console.log("Leer corredores con query:", req.query)
-	let que = bsqQue(req.query);
-    if (que) res.send(bsq (que, req.query[que]));
-	else res.send(corredores);
+    console.log("Anda a bsq con ", req.query)
+    res.send(bsq (req.query));
 });
 
 app.get('/corredor/:id', (req,res) => {
